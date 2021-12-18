@@ -1,1 +1,32 @@
+.container {
+  position: relative;
+  background: var(--background);
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 2rem;
+}
+
+.tile {
+  color: #fff;
+  border-radius: 0.5rem;
+  max-width: 100%;
+  text-align: center;
+  padding: 0.75em 0.5em;
+  background: none;
+  border: 0;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.todo {
+  background: #521391;
+  border-radius: 0.5rem;
   
+  padding: 0.75rem 1rem;
+}
