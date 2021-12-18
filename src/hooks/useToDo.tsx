@@ -6,7 +6,7 @@ export interface ITodo {
   title: string;
   check: boolean;
   createdAt: Date;
-  deadline: string | "";
+  deadline: Date;
 }
 
 export interface ITodoCategory {
@@ -15,6 +15,13 @@ export interface ITodoCategory {
   color: string;
   todos: ITodo[];
   createdAt: Date;
+}
+
+type IListTodoSummary = Pick<ITodoCategory, 'id' | 'title'>;
+
+export interface ITodoPriority {
+  list: IListTodoSummary;
+  todo: ITodo;  
 }
 
 type ITodoCategoryInput = Pick<ITodoCategory, 'title' | 'color'>;
@@ -28,6 +35,7 @@ type ICreateTodo = {id:string; createTodo: ITodoInput};
 
 interface ITodosContextData {
   todos: ITodoCategory[];
+  priority: ITodoPriority[];
   name: string;
   login: (name: string) => void;
   logout: () => void;
@@ -49,7 +57,43 @@ const TodosContext = createContext<ITodosContextData>(
 
 export function TodosProvider({children}: ITodosProviderProps) {
   const [todos, setTodos] = useState<ITodoCategory[]>([]);
+  const [priority, setPriority] = useState<ITodoPriority[]>([]);
   const [name, setName] = useState('');
+
+  useEffect(() => {
+    const newTodo = todos;
+    const newPriorityArray: ITodoPriority[] = [];
+    
+    newTodo.map(list => {
+      list.todos.filter(todo => {
+        if(!todo.check) {          
+          const priorityList = {
+            list: {
+              id: list.id,
+              title: list.title
+            },
+            todo
+          }
+
+          newPriorityArray.push(priorityList);
+        }
+      });
+    });
+
+    console.log(newPriorityArray);
+
+    newPriorityArray.map(list => {
+      list.todo
+    })
+
+    
+    newPriorityArray.sort((a, b) => {
+      return a.todo.deadline.getTime() - b.todo.deadline.getTime();
+    });
+    console.log(newPriorityArray)
+    
+    setPriority(newPriorityArray); 
+  }, [todos])
     
   function login(name: string) {
     localStorage.setItem("@DoAList:name", name);
@@ -108,7 +152,7 @@ export function TodosProvider({children}: ITodosProviderProps) {
     }
   }
 
-  function createTodo({id, createTodo:{title, deadline = ""}}: ICreateTodo) {
+  function createTodo({id, createTodo:{title, deadline}}: ICreateTodo) {
     const newTodos = todos;
 
     const indexUpdated = newTodos.findIndex(todo => todo.id === id);
@@ -119,7 +163,7 @@ export function TodosProvider({children}: ITodosProviderProps) {
         const newList : ITodo = {
           id: uuidV4(),
           title,
-          deadline, 
+          deadline: deadline || new Date(), 
           check: false,
           createdAt: new Date()
         }
@@ -166,6 +210,7 @@ export function TodosProvider({children}: ITodosProviderProps) {
   return (
     <TodosContext.Provider value={{
       todos, 
+      priority,
       name, 
       login, 
       logout, 

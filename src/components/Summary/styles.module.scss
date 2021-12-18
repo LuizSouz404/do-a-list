@@ -41,6 +41,10 @@ $border: 3px;
         border: 0;
       }
     }
+    
+    &:nth-child(3) {
+      cursor: pointer;
+    }
   }
 }
 

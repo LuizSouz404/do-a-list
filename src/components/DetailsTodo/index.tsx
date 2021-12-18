@@ -33,9 +33,24 @@ export function DetailsTodo({isOpen, onRequestClose, todo}: IDetailsTodo) {
   function handleCreateNewList(event: FormEvent) {
     event.preventDefault();
 
-    createTodo({id: todo.id, createTodo: {title, deadline}});
+    let deadlineString = deadline;
+
+    if(deadlineString === '') {
+      deadlineString = '23:59';
+    }
+
+    const [hour, minute] = deadlineString.split(':');
+
+    const today = Date.now();
+
+    const dateTodo = new Date(today).setHours(parseInt(hour), parseInt(minute));
+
+    console.log(dateTodo)
+
+    createTodo({id: todo.id, createTodo: {title, deadline: new Date(dateTodo)}});
 
     setTitle('');
+    setDeadline('');
   }
 
   function handleDeleteList(idList: string, idTodo: string) {
@@ -74,7 +89,7 @@ export function DetailsTodo({isOpen, onRequestClose, todo}: IDetailsTodo) {
             onChange={event => setTitle(event.target.value)}
           />
           <input 
-            type="datetime-local"
+            type="time"
             style={todo.color === '#fefeff' ? {color: "#000", borderBottom: '1px solid #000'} : {color: "#fff", borderBottom: '1px solid #fff'}}
             value={deadline}
             onChange={event => setDeadline(event.target.value)}

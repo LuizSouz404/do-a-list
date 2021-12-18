@@ -3,26 +3,11 @@ import { ITodo, useTodos } from '../../hooks/useToDo';
 import styles from './styles.module.scss';
 
 export function Summary() {
-  const {todos} = useTodos();
-  const [priority, setPriority] = useState<ITodo[]>([]);
-
-  useEffect(() => {
-    todos.filter(list => {
-      const index = list.todos.filter(todo => {
-        if(!todo.check) {
-          return todo;
-        }
-      });
-      
-      index.sort();
-
-      setPriority(index);
-      return index;
-    });
-    
-  }, [todos])
-  
-  console.log(priority);
+  const {todos, priority, checkedTodo} = useTodos();
+ 
+  function handleCheckedTodo(idList: string, idTodo: string) {
+    checkedTodo({idList, idTodo});
+  }
 
   const qtdTodo = todos.reduce((acc, todo) => {
     const completedTodo = todo.todos.reduce((acc, list) => {
@@ -70,10 +55,10 @@ export function Summary() {
       </div>
       <div>
         <header>
-          <p>Priority</p>
+          { priority.length !== 0 ? <p>Priority</p> : ""}
         </header>
-        <strong>
-          work - Drink coffe to stay Awake
+        <strong onClick={priority.length !== 0 ? () => handleCheckedTodo(priority[0].list.id, priority[0].todo.id) : () => {} }>
+          {priority.length !== 0 ? `${priority[0].list.title} - ${priority[0].todo.title}` : "Não possui nenhuma tarefa."}
         </strong>
       </div>
     </div>
