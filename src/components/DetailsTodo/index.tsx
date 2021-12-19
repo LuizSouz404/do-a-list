@@ -45,8 +45,6 @@ export function DetailsTodo({isOpen, onRequestClose, todo}: IDetailsTodo) {
 
     const dateTodo = new Date(today).setHours(parseInt(hour), parseInt(minute));
 
-    console.log(dateTodo)
-
     createTodo({id: todo.id, createTodo: {title, deadline: new Date(dateTodo)}});
 
     setTitle('');

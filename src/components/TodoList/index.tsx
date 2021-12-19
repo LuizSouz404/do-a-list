@@ -28,7 +28,7 @@ export function TodoList({title, todos, color, id, createdAt}: ITodoCategory) {
 
   return (
     <>
-      <div className={styles.container} style={{background: color}}>
+      <div className={styles.container} style={{background: color}} draggable="true">
         <header style={color === '#fefeff' ? {color: "#000", fill: "#000"} : {color: "#fff", fill: "#fff"}}>
           <div className={styles.title}>
             <strong>
