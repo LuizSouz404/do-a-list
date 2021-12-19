@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Dispatch, SetStateAction } from 'react';
 import { useTodos } from '../../hooks/useToDo';
 import styles from './styles.module.scss';
@@ -17,8 +18,8 @@ export function TabMenu({modalIsOpen}: ITabMenu) {
 
   return (
     <div className={styles.container}>
-      <a href="#account">Account</a>
-      <a href="#calendary">Calendary</a>
+      <Link href="/"  passHref>Home</Link>
+      <Link href="/calendar">Calendary</Link>
       <a onClick={handleLogOut}>Sair</a>
     </div>
   )
