@@ -18,8 +18,15 @@ export function TabMenu({modalIsOpen}: ITabMenu) {
 
   return (
     <div className={styles.container}>
-      <Link href="/"  passHref>Home</Link>
-      <Link href="/calendar">Calendary</Link>
+      <Link href="/"  passHref>
+        <a>
+          Home
+        </a> 
+      </Link>
+      <Link href="/calendar">
+        <a>
+          Calendary
+        </a></Link>
       <a onClick={handleLogOut}>Sair</a>
     </div>
   )
