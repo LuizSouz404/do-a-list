@@ -20,6 +20,8 @@
 
 <img alt="Layout" src="https://user-images.githubusercontent.com/79121809/147284589-c36e70b1-c2fe-4298-a483-341baa97fd05.gif">
 
+<img alt="Layout" src="https://user-images.githubusercontent.com/79121809/147351408-d8ed2cb8-29c8-4226-a13d-871266c8760d.png">
+
 ## 👨🏻‍💻 Sobre o repositorio
 
 Resumo do projeto no [figma](https://www.figma.com/file/3AYA8xKfw3XJqQT6lyZmOX/Do-a-list?node-id=2%3A2)
