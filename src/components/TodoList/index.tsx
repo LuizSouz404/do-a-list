@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {CgMoreAlt, CgArrowsExpandRight} from 'react-icons/cg';
-import { ITodo, ITodoCategory, useTodos } from '../../hooks/useToDo';
+import { ITodoCategory, useTodos } from '../../hooks/useToDo';
 import colors from '../../utils/colors.module.scss';
 import { DetailsTodo } from '../DetailsTodo';
 
@@ -60,12 +60,12 @@ function MenuConfig({idList}: IMenuTypes) {
   const [chooseColor, setChooseColor] = useState(false);
   const { deleteList, updateColorList } = useTodos();
 
-  function handleDeleteTodo(id: string) {
-    deleteList({id});
+  async function handleDeleteTodo(id: string) {
+    await deleteList({id});
   }
 
-  function handleChangeColorTodo(id: string, color: string) {
-    updateColorList({id, color}) 
+  async function handleChangeColorTodo(id: string, color: string) {
+    await updateColorList({id, color}) 
   }
   
   return (
