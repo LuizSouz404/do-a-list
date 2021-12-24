@@ -14,10 +14,10 @@ export function NewTodoModal({isOpen, onRequestClose}: INewTodoModal) {
   const [color, setColor] = useState('#fefeff');
   const [title, setTitle] = useState('');
 
-  function handleCreateNewTodo(event: FormEvent) {
+  async function handleCreateNewTodo(event: FormEvent) {
     event.preventDefault();
 
-    createList({
+    await createList({
       title,
       color
     })
