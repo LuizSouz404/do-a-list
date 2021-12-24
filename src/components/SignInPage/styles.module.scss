@@ -1,0 +1,144 @@
+.container {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  padding: 2rem;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  background: var(--background);
+
+  h1 {
+    text-align: center;
+  }
+
+  > img {
+    width: 20rem;
+    margin-top: 2rem;
+  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  flex: 1 1;
+  justify-content: space-between;
+  width: 100%;
+  padding: 3rem;
+  
+  img {
+    width: 50%;
+    max-width: 500px;
+  }
+
+
+  form {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    
+    h1 {
+      font-weight: bold;
+    }
+    
+    a {
+      color: #FB993F;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 1rem;
+      background: #FB993F;
+      color: #000;
+      border: 0;
+      border-radius: .75rem;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s filter;
+
+      svg {
+        margin-right: 0.5rem;
+      }
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+
+  }
+  
+}
+
+.socialSignin {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 2rem 0;
+
+  div {
+    cursor: pointer;
+    width: 3rem;
+    height: 3rem;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      color: #000;
+      transition: 0.3s color;
+    }
+
+    &:hover {
+      svg {
+        color: #FB993F;
+      }
+    }
+  }
+}
+
+.divisor {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  div {
+    height: 1px;
+    background-color: #fff;
+    width: 101%;
+  }
+
+  span {
+    margin: 0 1rem;
+  }
+}
+
+.inputStyled {
+  margin-top: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid #fff;
+  border-radius: .75rem;
+  transition: 0.3s border;
+
+  svg {
+    transition: 0.3s color;
+  }
+
+  input {
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    padding: 0.5rem 1rem;
+    color: #fff;
+  }
+
+  & + div {
+    margin-top: 1rem;
+  }
+}
