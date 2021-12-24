@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
-import { ITodo, useTodos } from '../../hooks/useToDo';
+import { useTodos } from '../../hooks/useToDo';
 import styles from './styles.module.scss';
 
 export function Summary() {
   const {todos, priority, checkedTodo} = useTodos();
  
-  function handleCheckedTodo(idList: string, idTodo: string) {
-    checkedTodo({idList, idTodo});
+  async function handleCheckedTodo(idList: string, idTodo: string) {
+    await checkedTodo({idList, idTodo});
   }
 
   const qtdTodo = todos.reduce((acc, todo) => {
+    if(new Date(todo.createdAt).setHours(0,0,0,0) !== new Date().setHours(0,0,0,0)) {
+      return acc;
+    }
     const completedTodo = todo.todos.reduce((acc, list) => {
       list.check ? acc++ : acc;
 
