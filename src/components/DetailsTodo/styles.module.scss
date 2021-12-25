@@ -1,19 +1,21 @@
 .container {
   height: 34rem;
-  background: var(--shape);
 
   display: flex;
   justify-content: space-between;
   flex-direction: column;
 
+  background: var(--shape);
+
   header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    filter: brightness(0.9);
-    color: #FEFEFF;
 
     padding: 1rem 1.5rem;
+
+    color: #FEFEFF;
+    filter: brightness(0.9);
 
     div.title {
       display: flex;
@@ -26,33 +28,39 @@
   }
 
   .btnExpand {
-    align-self: flex-end;
     width: 1.5rem;
+
+    align-self: flex-end;
+
     margin: 1rem 1.5rem;
   }
 }
 
 .content {
-  flex: 1;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  color: #464647;
+  flex: 1;
+
   padding: 1rem 2.5rem;
 
+  color: #464647;
+
   ul {
+    width: 100%;
+
     display: flex;
     flex-direction: column;
-    width: 100%;
   }
 
   li {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
     flex: 1;
+
+    cursor: pointer;
 
     &+li {
       margin-top: 0.5rem;
@@ -64,28 +72,35 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding: 0.5rem 1.5rem;
 
   input {
-    padding: 0.25rem 0.75rem;
     flex: 1;
-    background: transparent;
-    outline: none;
+
+    margin-right: 1rem;
+    padding: 0.25rem 0.75rem;
+
     border: 0;
     border-bottom: 1px solid #fff;
-    margin-right: 1rem;
+    outline: none;
+
+    background: transparent;
   }
 
   button {
     width: 2rem;
-    display: flex;
     height: 2rem;
+
+    display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
+
     border: 0;
     outline: none;
+
     cursor: pointer;
+    background: transparent;
   }
 }
 
@@ -96,15 +111,3 @@
 .btnDetails {
   position: relative;
 }
-
-@keyframes scale-up-center{
-  0%{
-    opacity: 0;
-    transform:scale(.9)
-  } 100%{
-    opacity: 1;
-    transform:scale(1)
-  }
-}
-
-@keyframes scale-up-ver-top{0%{transform:scaleY(.4);transform-origin:100% 0}100%{transform:scaleY(1);transform-origin:100% 0}}
