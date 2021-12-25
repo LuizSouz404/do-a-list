@@ -1,3 +1,5 @@
+import { CgMathPlus } from 'react-icons/cg';
+import { useTodos } from '../../hooks/useToDo';
 import { Summary } from '../Summary';
 import { TodosTable } from '../TodosTable';
 import styles from './styles.module.scss';
@@ -7,15 +9,20 @@ interface IDashboardProps {
 }
 
 export function Dashboard({ onOpenNewTodoModal }: IDashboardProps) {
+  const {user} = useTodos();
   return (
-    <main className={styles.container}>
+    <main className={styles.container}
+      style={!user?
+        {visibility: 'hidden', opacity: '0', transition: 'visibility .3s, opacity .3s ease-in-out'} :
+        {visibility: 'visible', opacity: '1', transition: 'visibility .3s, opacity .3s ease-in-out'}}
+    >
       <div className={styles.content}>
         <Summary />
         <TodosTable />
 
       </div>
       <button className={styles.btn} onClick={onOpenNewTodoModal}>
-        <img src="/images/plus.svg" alt="Adicionar todo" />
+        <CgMathPlus size={24}/>
       </button>
     </main>
   )
