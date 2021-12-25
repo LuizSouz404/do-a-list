@@ -1,45 +1,51 @@
 @use '../../utils/colors.module.scss' as colors;
 
-.container {  
+.container {
   padding: 3rem 3rem;
 
   input {
     width: 100%;
-    padding: 0 1rem;
     height: 2.5rem;
-    
-    border: 0;
-    outline: 0;    
-    border-bottom: 1px  solid #d7d7d7;
-    background: transparent;
 
-    color: #606061;    
+    padding: 0 1rem;
+
+    border: 0;
+    border-bottom: 1px  solid #d7d7d7;
+    outline: 0;
+
     font-weight: 400;
     font-size: 1rem;
-    
+
+    background: transparent;
+    color: #606061;
+
     &::placeholder {
       color: var(--text-body);
     }
-    
+
     & + input {
       margin-top: 1rem;
     }
   }
-  
+
   button[type="submit"] {
     width: 100%;
-    padding: 0 1.5rem;
     height: 4rem;
-    background: var(--green);
-    color: #fff;
+
+    padding: 0 1.5rem;
+    margin-top: 1.5rem;
+
     border-radius: 0.25rem;
     border: 0;
+
     font-size: 1rem;
-    margin-top: 1.5rem;
     font-weight: 600;
-    
+
+    background: var(--green);
+    color: #fff;
+
     transition: filter 0.2s;
-    
+
     &:hover {
       filter: brightness(0.9);
     }
@@ -49,24 +55,28 @@
 .headerModal {
   width: 100%;
   height: 5rem;
-  background: colors.$colorDefault;
-  filter: brightness(0.9);
+
   display: flex;
   align-items: center;
-  color: #FEFEFF;
   justify-content: space-around;
+
+  color: #FEFEFF;
+  background: colors.$colorDefault;
+  filter: brightness(0.9);
 
   strong {
     font-size: 1.15rem;
   }
 
   button {
-    font-size: 1rem;
     border: 0;
+
+    font-size: 1rem;
+
     background: transparent;
-  
+
     transition: filter 0.2s;
-  
+
     &:hover {
       filter: brightness(0.5);
     }
@@ -76,26 +86,28 @@
 .todoColorContainer {
   display: flex;
   flex-direction: column;
+
   margin-top: 1rem;
 
   strong {
     color: #606061;
   }
-}
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 
-.todoColorContent {
-  margin: 1rem 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+    margin: 1rem 0;
 
-  button {
-    height: 1.5rem;
-    width: 1.5rem;
-    background: #464647;
-    border: 1px solid rgb(60, 60, 60);
-    box-shadow: 1px 1px 7px 0px rgba(0,0,0,0.53);
+    button {
+      height: 1.5rem;
+      width: 1.5rem;
 
-    border-radius: 50%;
+      border: 1px solid rgb(60, 60, 60);
+      border-radius: 50%;
+
+      background: #464647;
+      box-shadow: 1px 1px 7px 0px rgba(0,0,0,0.53);
+    }
   }
 }
