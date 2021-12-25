@@ -1,5 +1,5 @@
 import Lottie from 'react-lottie';
-import animationData from '../../lottie/49897-task-icon.json';
+import animationData from '../../lottie/loading.json';
 import styles from './styles.module.scss';
 
 export function Loading() {
