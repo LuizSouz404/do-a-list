@@ -1,25 +1,31 @@
 .container {
   max-width: 1120px;
-  margin: 0 auto;
-  position: relative;
-  background: var(--background);
-  padding: 2.5rem 2rem;
+
   display: grid;
   grid-template-columns: 3fr 2fr;
   gap: 3rem;
+
+  position: relative;
+
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+
+  background: var(--background);
 }
 
 .tile {
-  color: #fff;
-  border-radius: 0.5rem;
-  max-width: 100%;
-  text-align: center;
   padding: 0.75rem;
-  background: none;
+
   border: 0;
+  border-radius: 0.5rem;
+
+  text-align: center;
+
+  background: none;
+  color: #fff;
 }
 
-.reactCalendar {  
+.reactCalendar {
   animation:scale-up-show 0.3s cubic-bezier(.39,.575,.565,1.000) both;
 }
 
@@ -31,10 +37,21 @@
 }
 
 .todo {
-  animation:scale-up-center .3s cubic-bezier(.39,.575,.565,1.000) both;
-  border-radius: 0.5rem;
-  
   padding: 0.75rem 1rem;
+
+  border-radius: 0.5rem;
+
+  animation:scale-up-center .3s cubic-bezier(.39,.575,.565,1.000) both;
+}
+
+@media (max-width: 720px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+
+    padding: 0;
+    margin: 2rem
+  }
 }
 
 @keyframes scale-up-center{
