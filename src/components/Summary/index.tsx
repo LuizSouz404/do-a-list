@@ -1,9 +1,10 @@
 import { useTodos } from '../../hooks/useToDo';
+
 import styles from './styles.module.scss';
 
 export function Summary() {
   const {todos, priority, checkedTodo} = useTodos();
- 
+
   async function handleCheckedTodo(idList: string, idTodo: string) {
     await checkedTodo({idList, idTodo});
   }
@@ -20,7 +21,7 @@ export function Summary() {
 
     acc.completedTodo += completedTodo;
 
-    todo.todos.length ? acc.totalTodo+=todo.todos.length : acc.totalTodo; 
+    todo.todos.length ? acc.totalTodo+=todo.todos.length : acc.totalTodo;
 
     return acc;
   }, {
@@ -38,10 +39,10 @@ export function Summary() {
           {new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: "numeric" }).format(new Date())}
         </strong>
       </div>
-      <div 
-        className={styles.percentageBorder} 
+      <div
+        className={styles.percentageBorder}
         style={
-          qtdTodo.completedTodo > 0 ? 
+          qtdTodo.completedTodo > 0 ?
             {background: `linear-gradient(90deg, #00bf7a ${qtdTodo.completedTodo /qtdTodo.totalTodo * 100}%, var(--gray) ${qtdTodo.completedTodo /qtdTodo.totalTodo * 100 + 3}%)`} :
             {background: 'var(--gray)'}
         }
@@ -57,7 +58,7 @@ export function Summary() {
       </div>
       <div>
         <header>
-          { priority.length !== 0 ? <p>Priority</p> : ""}
+          { priority.length !== 0 && <p>Priority</p> }
         </header>
         <strong onClick={priority.length !== 0 ? () => handleCheckedTodo(priority[0].list.id, priority[0].todo.id) : () => {} }>
           {priority.length !== 0 ? `${priority[0].list.title} - ${priority[0].todo.title}` : "Não possui nenhuma tarefa."}
@@ -66,4 +67,3 @@ export function Summary() {
     </div>
   )
 }
-//date percentage quantity
