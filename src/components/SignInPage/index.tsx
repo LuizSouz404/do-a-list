@@ -1,8 +1,11 @@
-import Link from 'next/link';
 import { FormEvent, useRef, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useTodos } from '../../hooks/useToDo';
+
 import styles from './styles.module.scss';
-import { FaFacebookF, FaGithub, FaGoogle, FaLock, FaSignInAlt, FaTwitter, FaUser } from 'react-icons/fa'
+import { FaFacebookF, FaGithub, FaGoogle, FaLock, FaSignInAlt, FaTwitter } from 'react-icons/fa'
+import { CgMail } from 'react-icons/cg'
 
 export function SignInPage() {
   const {login, user} = useTodos();
@@ -14,7 +17,7 @@ export function SignInPage() {
   const [isActiveEmail, setIsActiveEmail] = useState(false);
   const [isFilledEmail, setIsFilledEmail] = useState(false);
 
-  // Passowrd input  
+  // Passowrd input
   const inputRefPassword = useRef<HTMLInputElement>(null);
   const [isActivePassword, setIsActivePassword] = useState(false);
   const [isFilledPassword, setIsFilledPassword] = useState(false);
@@ -23,52 +26,61 @@ export function SignInPage() {
     event.preventDefault();
 
     await login({email: emailInput, password: passwordInput})
-    
+
     setPasswordInput('');
     setEmailInput('');
   }
 
-  function toogleInputEmail() {
+  function toggleInputEmail() {
     setIsActiveEmail(!isActiveEmail);
     setIsFilledEmail(!!inputRefEmail.current?.value)
   }
 
-  function toogleInputPassword() {
+  function toggleInputPassword() {
     setIsActivePassword(!isActivePassword);
     setIsFilledPassword(!!inputRefPassword.current?.value)
   }
 
   return (
-    <div 
-      className={styles.container} 
-      style={user? 
-      {visibility: 'hidden', opacity: '0', transition: 'visibility .3s, opacity .3s ease-in-out'} : 
+    <div
+      className={styles.container}
+      style={user?
+      {visibility: 'hidden', opacity: '0', transition: 'visibility .3s, opacity .3s ease-in-out'} :
       {visibility: 'visible', opacity: '1', transition: 'visibility .3s, opacity .3s ease-in-out'}}
     >
-      <img src="/logo.png" alt="Do a List" />
+
+      <div className={styles.imageLogo}>
+        <Image width={558} height={120} src="/logo.png" alt="Do a List" />
+      </div>
+
       <div className={styles.content}>
-        <img src="/images/question.svg" alt="https://storyset.com/people by Storyset" />
+
+        <div className={styles.imageContent}>
+          <Image width={500} height={500} src="/images/question.svg" alt="https://storyset.com/people by Storyset" />
+        </div>
+
         <form onSubmit={handleName}>
 
           <h1>Sign in</h1>
+
           <span>
-            Don't have an account yet?{' '}
+            Don&apos;t have an account yet?
             <Link href='/signup' passHref>
-              <a>Sign up</a>
+              <a> Sign up</a>
             </Link>
           </span>
 
-          <div className={styles.socialSignin}>
-            <div>
+          <div className={styles.socialSignIn}>
+            <div onClick={() => alert('In maintenance sorry')}>
               <FaFacebookF size={24}/>
             </div>
-            <div>
+            <div onClick={() => alert('In maintenance sorry')}>
               <FaGoogle size={24}/>
             </div>
-            <div>
+            <div onClick={() => alert('In maintenance sorry')}>
               <FaGithub size={24}/>
             </div>
-            <div>
+            <div onClick={() => alert('In maintenance sorry')}>
               <FaTwitter size={24}/>
             </div>
           </div>
@@ -83,45 +95,52 @@ export function SignInPage() {
             "border": "2px solid #Fb993f",
             "color": "#Fb993f"
           }: {}} className={styles.inputStyled}>
+
             <label htmlFor="email">
-              <FaUser />
+              <CgMail size={16}/>
             </label>
-            <input 
-              type="email" 
-              placeholder="Seu email" 
+
+            <input
+              type="email"
+              placeholder="Seu email"
               name="email"
               ref={inputRefEmail}
-              onFocus={toogleInputEmail}
-              onBlur={toogleInputEmail}
+              onFocus={toggleInputEmail}
+              onBlur={toggleInputEmail}
               value={emailInput}
               onChange={event => setEmailInput(event.target.value)}
-            >              
-            </input>
+            />
+
           </div>
 
           <div style={isActivePassword || isFilledPassword ? {
             "border": "2px solid #Fb993f",
             "color": "#Fb993f"
           }: {}} className={styles.inputStyled}>
-            <FaLock />
-            <input 
-              type="password" 
+
+            <label htmlFor="password">
+              <FaLock size={16}/>
+            </label>
+
+            <input
+              type="password"
               placeholder="Sua senha"
               name="password"
               ref={inputRefPassword}
-              onFocus={toogleInputPassword}
-              onBlur={toogleInputPassword}
+              onFocus={toggleInputPassword}
+              onBlur={toggleInputPassword}
               value={passwordInput}
               onChange={event => setPasswordInput(event.target.value)}
-            >              
-            </input>
-          </div>    
+            />
+
+          </div>
 
           <button type="submit">
             <FaSignInAlt />
             Sign in with email
           </button>
-        </form>        
+
+        </form>
       </div>
     </div>
   )

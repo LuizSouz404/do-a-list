@@ -1,13 +1,15 @@
 .container {
-  position: absolute;
   height: 100vh;
   width: 100vw;
-  z-index: 10;
-  padding: 2rem;
 
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  position: absolute;
+  z-index: 10;
+
+  padding: 4rem;
 
   background: var(--background);
 
@@ -15,50 +17,150 @@
     text-align: center;
   }
 
-  > img {
+  .imageLogo {
     width: 20rem;
-    margin-top: 2rem;
+    height: 5rem;
+
+    position: relative;
   }
 }
 
 .content {
+  width: 100%;
+  max-width: 1120px;
+
   display: flex;
   align-items: center;
+  justify-content: space-around;
   flex: 1 1;
-  justify-content: space-between;
-  width: 100%;
-  padding: 3rem;
-  
-  img {
+
+  margin: 3rem;
+
+  .imageContent {
     width: 50%;
     max-width: 500px;
   }
 
 
   form {
+    width: 35%;
+
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    
-    h1 {
-      font-weight: bold;
-    }
-    
+
+    margin: auto;
+
     a {
       color: #FB993F;
     }
 
+    .socialSignIn {
+      width: 100%;
+
+      display: flex;
+      justify-content: space-between;
+
+      margin: 2rem 0;
+
+      div {
+        width: 3rem;
+        height: 3rem;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background-color: #fff;
+        cursor: pointer;
+
+        svg {
+          color: #000;
+          transition: 0.3s color;
+        }
+
+        &:hover {
+          svg {
+            color: #FB993F;
+          }
+        }
+      }
+    }
+
+    .divisor {
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+
+      div {
+        width: 100%;
+        height: 1px;
+
+        background-color: #fff;
+      }
+
+      span {
+        margin: 0 1rem;
+      }
+    }
+
+    .inputStyled {
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+
+      margin-top: 1.5rem;
+      padding: 0rem 1rem;
+
+      border: 2px solid #fff;
+      border-radius: .75rem;
+
+      transition: 0.3s border;
+
+      label {
+        display: flex;
+        align-items: center;
+        svg {
+          transition: 0.3s color;
+        }
+      }
+
+      input {
+        width: 100%;
+
+        padding: 0.5rem 1rem;
+
+        border: 0;
+        outline: none;
+
+        color: #fff;
+        background-color: transparent;
+      }
+
+      & + div {
+        margin-top: 1rem;
+      }
+    }
+
     button {
       width: 100%;
-      margin-top: 1rem;
-      background: #FB993F;
-      color: #000;
-      border: 0;
-      border-radius: .75rem;
-      padding: 1rem;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
+      margin-top: 1rem;
+      padding: 1rem;
+
+      border: 0;
+      border-radius: .75rem;
+
+      background: #FB993F;
+      color: #000;
       transition: 0.3s filter;
 
       svg {
@@ -71,74 +173,45 @@
     }
 
   }
-  
+
 }
 
-.socialSignin {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin: 2rem 0;
-
-  div {
-    cursor: pointer;
-    width: 3rem;
-    height: 3rem;
-    background-color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    svg {
-      color: #000;
-      transition: 0.3s color;
-    }
-
-    &:hover {
-      svg {
-        color: #FB993F;
-      }
+@media (max-width: 650px) {
+  .container {
+    > .imageLogo {
+      width: 75%;
     }
   }
+  .content {
+    .imageContent {
+      display: none;
+    }
+
+    form {
+      flex: 1;
+    }
+  }
+
+  .socialSignin {
+    justify-content: space-evenly;
+  }
+
 }
 
-.divisor {
-  display: flex;
-  align-items: center;
-  width: 100%;
-
-  div {
-    height: 1px;
-    background-color: #fff;
-    width: 101%;
+@media (max-width: 450px) {
+  .container {
+    > .imageLogo {
+      width: 90%;
+      height: 4rem;
+    }
   }
+  .content {
+    .imageContent {
+      display: none;
+    }
 
-  span {
-    margin: 0 1rem;
-  }
-}
-
-.inputStyled {
-  margin-top: 1.5rem;
-  padding: 0.5rem 1rem;
-  border: 2px solid #fff;
-  border-radius: .75rem;
-  transition: 0.3s border;
-
-  svg {
-    transition: 0.3s color;
-  }
-
-  input {
-    background-color: transparent;
-    border: 0;
-    outline: none;
-    padding: 0.5rem 1rem;
-    color: #fff;
-  }
-
-  & + div {
-    margin-top: 1rem;
+    form {
+      flex: 1;
+    }
   }
 }
