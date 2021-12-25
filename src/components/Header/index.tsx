@@ -1,20 +1,25 @@
 import { useState } from 'react';
 import { useTodos } from '../../hooks/useToDo';
-import { TabMenu } from '../TabMenu';
+import Image from 'next/image'
 import styles from './styles.module.scss';
 
+import { MenuHeader } from '../MenuHeader';
+import { CgDetailsMore } from 'react-icons/cg';
+
 export function Header() {
-  const { name } = useTodos();
+  const { user } = useTodos();
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <header className={styles.container}>
-      <div>
-        <img src="/images/details.svg" alt="Details" onClick={() => setModalOpen(!modalOpen)}/>
-        <span>Olá, {name}.</span>
-        {modalOpen ? <TabMenu modalIsOpen={setModalOpen}/> : ""}        
+      <div className={styles.menu}>
+        <CgDetailsMore size={34} onClick={() => setModalOpen(!modalOpen)}/>
+        <span>Olá, {user?.name}.</span>
+        {modalOpen && <MenuHeader modalIsOpen={setModalOpen}/>}
       </div>
-      <img src="/logo.svg" alt="Logo" />
+      <div className={styles.logo}>
+        <Image layout='fill' src="/logo.png" alt="Logo" />
+      </div>
     </header>
   )
 }

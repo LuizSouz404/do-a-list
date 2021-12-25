@@ -1,36 +1,47 @@
 .container {
-  z-index: 3;
-  padding: 0 2rem;
-  transition: opacity 1s;
-  height: 5rem;
   max-width: 1120px;
+  height: 5rem;
+
+  z-index: 3;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  padding: 0 2rem;
   margin: 0 auto;
 
-  > div {
+  transition: opacity 1s;
+
+  .menu {
     display: flex;
     align-items: center;
     position: relative;
 
-    img {
+
+    svg {
       width: 2.25rem;
+
       margin-right: 1rem;
+
       cursor: pointer;
     }
   }
 
-  img {
+  .logo {
     width: 8.5rem;
+    height: 2rem;
+
+    position: relative;
   }
 }
 
 @media (max-width: 450px) {
   .container {
     position: sticky;
+    top: 0;
+
     background: var(--background);
     box-shadow: 0px -8px 14px 4px #000;
-    top: 0;
   }
 }
