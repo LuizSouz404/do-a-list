@@ -1,9 +1,20 @@
+import Lottie from 'react-lottie';
+import animationData from '../../lottie/49897-task-icon.json';
 import styles from './styles.module.scss';
 
 export function Loading() {
-  return (    
+  const defaultOptions = {
+    loop:true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  }
+
+  return (
     <div className={styles.container}>
-      <img src="/logo.svg" alt="Loading" />
+      <Lottie options={defaultOptions} height={300} width={300} />
       <strong>Carregando...</strong>
     </div>
   )
