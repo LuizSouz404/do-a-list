@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
-import { LoginPage } from "../components/SignInPage";
+import { SignInPage } from "../components/SignInPage";
 
 export default function SignIn() {
   return(
-    <LoginPage />
+    <SignInPage />
   )
 }
 
@@ -19,7 +19,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
-  
+
   return {
     props: {}
   }
