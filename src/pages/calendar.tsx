@@ -1,29 +1,32 @@
 import { Header } from "../components/Header";
-import { useState } from "react";
-import { NewTodoModal } from "../components/NewTodoModal";
-import { LoginPage } from "../components/LoginPage";
 import { CalendaryModal } from "../components/CalendaryModal";
+import { parseCookies } from "nookies";
+import { GetServerSideProps } from "next";
 
 export default function Calendar() {
-  const [isNewTodoModalOpen, setIsNewTodoModalOpen] = useState(false);
-
-  function handleOpenNewTodoModal() {
-    setIsNewTodoModalOpen(true);
-  }
-  
-  function handleCloseNewTodoModal() {
-    setIsNewTodoModalOpen(false);
-  }
-
   return (
     <>
-      <LoginPage />
       <Header/>
       <CalendaryModal />
-      <NewTodoModal 
-        isOpen={isNewTodoModalOpen} 
-        onRequestClose={handleCloseNewTodoModal}
-      />
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const {['DoAList.token']: token } = parseCookies(ctx);
+
+  if(!token) {
+    return {
+      redirect: {
+        destination: '/signin',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      data: token
+    }
+  }
 }
