@@ -1,8 +1,8 @@
+import { useTodo } from '../../context/todo';
 import { FormEvent, useState } from 'react';
 import Modal from 'react-modal';
-import { useTodos } from '../../hooks/useToDo';
-import styles from './styles.module.scss';
 
+import styles from './styles.module.scss';
 import colors from '../../utils/colors.module.scss';
 
 interface INewTodoModal {
@@ -11,14 +11,14 @@ interface INewTodoModal {
 }
 
 export function NewTodoModal({isOpen, onRequestClose}: INewTodoModal) {
-  const { createList } = useTodos();
+  const { listCreate } = useTodo();
   const [color, setColor] = useState('#fefeff');
   const [title, setTitle] = useState('');
 
   async function handleCreateNewTodo(event: FormEvent) {
     event.preventDefault();
 
-    await createList({
+    await listCreate({
       title,
       color
     })

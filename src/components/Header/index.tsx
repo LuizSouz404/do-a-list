@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { useTodos } from '../../hooks/useToDo';
 import Image from 'next/image'
 import styles from './styles.module.scss';
 
 import { MenuHeader } from '../MenuHeader';
 import { CgDetailsMore } from 'react-icons/cg';
+import { useAuth } from '../../context/auth';
 
 export function Header() {
-  const { user } = useTodos();
+  const {user} = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
 
   return (

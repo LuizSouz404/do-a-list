@@ -1,7 +1,8 @@
 import { CgMathPlus } from 'react-icons/cg';
-import { useTodos } from '../../hooks/useToDo';
+import { useAuth } from '../../context/auth';
 import { Summary } from '../Summary';
 import { TodosTable } from '../TodosTable';
+
 import styles from './styles.module.scss';
 
 interface IDashboardProps {
@@ -9,7 +10,7 @@ interface IDashboardProps {
 }
 
 export function Dashboard({ onOpenNewTodoModal }: IDashboardProps) {
-  const {user} = useTodos();
+  const {user} = useAuth();
   return (
     <main className={styles.container}
       style={!user?

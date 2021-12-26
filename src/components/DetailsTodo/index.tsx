@@ -1,9 +1,9 @@
 import { FormEvent, useState } from 'react';
+import { IListTodo, useTodo } from '../../context/todo';
 import Modal from 'react-modal';
-import { ITodoCategory, useTodos } from '../../hooks/useToDo';
 import { MenuConfig } from '../MenuConfig';
-import styles from './styles.module.scss';
 
+import styles from './styles.module.scss';
 import { CgArrowsExpandRight, CgMoreAlt } from 'react-icons/cg';
 import { BsPencilFill } from 'react-icons/bs';
 import { TiDelete } from 'react-icons/ti'
@@ -11,11 +11,11 @@ import { TiDelete } from 'react-icons/ti'
 interface IDetailsTodo {
   isOpen: boolean;
   onRequestClose: () => void;
-  todo: ITodoCategory;
+  todo: IListTodo;
 }
 
 export function DetailsTodo({isOpen, onRequestClose, todo}: IDetailsTodo) {
-  const { checkedTodo, createTodo, deleteTodo } = useTodos();
+  const {todoCreate, todoDelete, todoUpdateCheck} = useTodo();
   const [title, setTitle] = useState('');
   const [deadline, setDeadline] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
@@ -26,8 +26,8 @@ export function DetailsTodo({isOpen, onRequestClose, todo}: IDetailsTodo) {
     return acc;
   }, 0);
 
-  async function handleCheckedTodo(idList: string, idTodo: string) {
-    await checkedTodo({idList, idTodo});
+  async function handleCheckedTodo(listID: string, todoID: string) {
+    await todoUpdateCheck({listID, todoID});
   }
 
   async function handleCreateNewList(event: FormEvent) {
@@ -45,14 +45,14 @@ export function DetailsTodo({isOpen, onRequestClose, todo}: IDetailsTodo) {
 
     const dateTodo = new Date(today).setHours(parseInt(hour), parseInt(minute));
 
-    await createTodo({id: todo.id, createTodo: {title, deadline: new Date(dateTodo)}});
+    await todoCreate({id: todo.id, title, deadline: new Date(dateTodo)});
 
     setTitle('');
     setDeadline('');
   }
 
-  async function handleDeleteList(idList: string, idTodo: string) {
-    await deleteTodo({idList, idTodo});
+  async function handleDeleteList(listID: string, todoID: string) {
+    await todoDelete({listID, todoID});
   }
 
   return (
@@ -73,7 +73,7 @@ export function DetailsTodo({isOpen, onRequestClose, todo}: IDetailsTodo) {
           <div className={styles.btnDetails} >
             <CgMoreAlt className={styles.btnDetails} size={24} style={todo.color === '#fefeff' ? {color: "#000"} : {color: "#fff"}} onClick={() => setModalOpen(!modalOpen)}/>
             {modalOpen ? (
-              <MenuConfig idList={todo.id} />
+              <MenuConfig listID={todo.id} />
             ) : ""}
           </div>
         </header>

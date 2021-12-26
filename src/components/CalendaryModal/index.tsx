@@ -2,12 +2,12 @@ import Calendar from 'react-calendar';
 import styles from './styles.module.scss';
 import {CgChevronLeft, CgChevronRight} from 'react-icons/cg';
 import { useEffect, useState } from 'react';
-import { ITodoCategory, useTodos } from '../../hooks/useToDo';
 import { isEqual } from 'date-fns';
+import { IListTodo, useTodo } from '../../context/todo';
 
 export function CalendaryModal() {
-  const { todos } = useTodos();
-  const [dayTodo, setDayTodo] = useState<ITodoCategory[]>([]);
+  const { todos } = useTodo();
+  const [dayTodo, setDayTodo] = useState<IListTodo[]>([]);
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {

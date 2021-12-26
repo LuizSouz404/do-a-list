@@ -1,12 +1,12 @@
-import { useTodos } from '../../hooks/useToDo';
+import { useTodo } from '../../context/todo';
 
 import styles from './styles.module.scss';
 
 export function Summary() {
-  const {todos, priority, checkedTodo} = useTodos();
+  const { todos, priority, todoUpdateCheck } = useTodo();
 
-  async function handleCheckedTodo(idList: string, idTodo: string) {
-    await checkedTodo({idList, idTodo});
+  async function handleCheckedTodo(listID: string, todoID: string) {
+    await todoUpdateCheck({listID, todoID});
   }
 
   const qtdTodo = todos.reduce((acc, todo) => {

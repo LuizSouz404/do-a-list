@@ -1,6 +1,7 @@
 import Link from 'next/link';
+import Router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import { useTodos } from '../../hooks/useToDo';
+import { useAuth } from '../../context/auth';
 import styles from './styles.module.scss';
 
 interface ITabMenu {
@@ -8,12 +9,14 @@ interface ITabMenu {
 }
 
 export function MenuHeader({modalIsOpen}: ITabMenu) {
-  const {logout} = useTodos();
+  const {signOut} = useAuth();
 
   function handleLogOut() {
-    logout();
+    signOut();
 
     modalIsOpen(false);
+
+    Router.push('/signin')
   }
 
   return (

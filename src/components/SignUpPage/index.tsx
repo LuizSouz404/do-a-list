@@ -1,55 +1,90 @@
-import { FormEvent, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTodos } from '../../hooks/useToDo';
+import * as Yup from 'yup';
 
 import styles from './styles.module.scss';
 import { FaFacebookF, FaGithub, FaGoogle, FaLock, FaSignInAlt, FaTwitter, FaUser } from 'react-icons/fa'
 import { CgMail } from 'react-icons/cg'
+import { SubmitHandler, useForm } from 'react-hook-form';
+import toast, { Toaster } from 'react-hot-toast';
+import Router from 'next/router';
+import { useAuth } from '../../context/auth';
+
+type SignUpData = {
+  username: string,
+  email: string,
+  password: string
+}
 
 export function SignUpPage() {
-  const {register, user} = useTodos();
-  const [usernameInput, setUsernameInput] = useState('');
-  const [emailInput, setEmailInput] = useState('');
-  const [passwordInput, setPasswordInput] = useState('');
+  const { register, watch, handleSubmit, formState: {errors} } = useForm<SignUpData>();
 
-  // Username input
-  const inputRefUsername = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const {signUp, user} = useAuth();
+
+  //Focus or Blur
   const [isActiveUsername, setIsActiveUsername] = useState(false);
-  const [isFilledUsername, setIsFilledUsername] = useState(false);
-
-  // Email input
-  const inputRefEmail = useRef<HTMLInputElement>(null);
   const [isActiveEmail, setIsActiveEmail] = useState(false);
-  const [isFilledEmail, setIsFilledEmail] = useState(false);
-
-  // Password input
-  const inputRefPassword = useRef<HTMLInputElement>(null);
   const [isActivePassword, setIsActivePassword] = useState(false);
-  const [isFilledPassword, setIsFilledPassword] = useState(false);
 
-  async function handleName(event: FormEvent) {
-    event.preventDefault();
+  const onSubmit: SubmitHandler<SignUpData> = useCallback(async(data: SignUpData) => {
+    try {
+      const schema = Yup.object().shape({
+        username: Yup.string()
+          .required('Nome obrigatório')
+          .min(3, 'Minimo 3 caracteres para o nome')
+          .max(15, 'Máximo de 15 caracteres'),
+        email: Yup.string()
+          .required('E-mail obrigatório')
+          .max(30)
+          .email('Digite um e-mail válido'),
+        password: Yup.string()
+          .required('Senha obrigatória')
+          .min(5, 'Senha minimo 5 caracteres')
+          .max(15, 'Senha máximo de 15 caracteres'),
+      });
 
-    await register({username: usernameInput, email: emailInput, password: passwordInput})
+      await schema.validate(
+        (data), {
+          abortEarly: false
+        }
+      );
 
-    setPasswordInput('');
-    setEmailInput('');
-  }
+      const {username, email, password} = data;
+
+      await signUp({
+        name: username,
+        email,
+        password
+      });
+
+      toast.success('Tudo certinho, conta criada com sucesso! ☺️');
+
+      Router.push('/');
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        error.errors.forEach(err => {
+          toast.error(`${err}`)
+        });
+
+        return;
+      }
+
+      toast.error("Ocorreu um erro ao fazer registro, cheque as credenciais.")
+    }
+  }, [signUp, toast]);
 
   function toggleInputUsername() {
     setIsActiveUsername(!isActiveUsername);
-    setIsFilledUsername(!!inputRefUsername.current?.value)
   }
 
   function toggleInputEmail() {
     setIsActiveEmail(!isActiveEmail);
-    setIsFilledEmail(!!inputRefEmail.current?.value)
   }
 
   function toggleInputPassword() {
     setIsActivePassword(!isActivePassword);
-    setIsFilledPassword(!!inputRefPassword.current?.value)
   }
 
   return (
@@ -59,13 +94,19 @@ export function SignUpPage() {
       {visibility: 'hidden', opacity: '0', transition: 'visibility .3s, opacity .3s ease-in-out'} :
       {visibility: 'visible', opacity: '1', transition: 'visibility .3s, opacity .3s ease-in-out'}}
     >
+
+      <Toaster position="bottom-center" reverseOrder={false} key='main'/>
+
       <div className={styles.imageLogo}>
         <Image width={558} height={120} src="/logo.png" alt="Do a List" />
       </div>
+
       <div className={styles.content}>
-        <form onSubmit={handleName}>
+
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
 
           <h1>Sign in</h1>
+
           <span>
             Already have an account?{' '}
             <Link href='/signin' passHref>
@@ -94,72 +135,77 @@ export function SignUpPage() {
             <div/>
           </div>
 
-          <div style={isActiveUsername || isFilledUsername ? {
+          <div style={isActiveUsername || watch('username') ? {
             "border": "2px solid #Fb993f",
             "color": "#Fb993f"
           }: {}} className={styles.inputStyled}>
+
             <label htmlFor="Username">
               <FaUser />
             </label>
+
             <input
+              {...register('username')}
               type="text"
               placeholder="Username"
               name="username"
-              ref={inputRefUsername}
               onFocus={toggleInputUsername}
               onBlur={toggleInputUsername}
-              value={usernameInput}
-              onChange={event => setUsernameInput(event.target.value)}
-            >
-            </input>
+            />
+
           </div>
 
-          <div style={isActiveEmail || isFilledEmail ? {
+          <div style={isActiveEmail || watch('email') ? {
             "border": "2px solid #Fb993f",
             "color": "#Fb993f"
           }: {}} className={styles.inputStyled}>
+
             <label htmlFor="email">
               <CgMail size={23} />
             </label>
+
             <input
+              {...register('email')}
               type="email"
               placeholder="Seu email"
               name="email"
-              ref={inputRefEmail}
               onFocus={toggleInputEmail}
               onBlur={toggleInputEmail}
-              value={emailInput}
-              onChange={event => setEmailInput(event.target.value)}
-            >
-            </input>
+            />
+
           </div>
 
-          <div style={isActivePassword || isFilledPassword ? {
+          <div style={isActivePassword || watch('password') ? {
             "border": "2px solid #Fb993f",
             "color": "#Fb993f"
           }: {}} className={styles.inputStyled}>
-            <FaLock />
+
+            <label htmlFor="password">
+              <FaLock size={16}/>
+            </label>
+
             <input
+              {...register('password')}
               type="password"
               placeholder="Sua senha"
               name="password"
-              ref={inputRefPassword}
               onFocus={toggleInputPassword}
               onBlur={toggleInputPassword}
-              value={passwordInput}
-              onChange={event => setPasswordInput(event.target.value)}
-            >
-            </input>
+            />
+
           </div>
 
           <button type="submit">
             <FaSignInAlt />
             Sign in with email
           </button>
+
         </form>
+
         <div className={styles.imageContent}>
           <Image width={500} height={500} src="/images/question.svg" alt="https://storyset.com/people by Storyset" />
         </div>
+
       </div>
     </div>
   )

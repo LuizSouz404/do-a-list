@@ -1,29 +1,29 @@
 import { useState } from 'react';
-import { useTodos } from '../../hooks/useToDo';
+import { useTodo } from '../../context/todo';
 
-import { CgBox, CgColorBucket, CgTrash } from 'react-icons/cg';
-import colors from '../../utils/colors.module.scss';
 import styles from './styles.module.scss';
+import colors from '../../utils/colors.module.scss';
+import { CgBox, CgColorBucket, CgTrash } from 'react-icons/cg';
 
 interface IMenuTypes {
-  idList: string
+  listID: string
 }
 
-export function MenuConfig({idList}: IMenuTypes) {
+export function MenuConfig({listID}: IMenuTypes) {
   const [chooseColor, setChooseColor] = useState(false);
-  const { deleteList, updateColorList } = useTodos();
+  const { listDelete, listUpdateColor } = useTodo();
 
   async function handleDeleteTodo(id: string) {
-    await deleteList({id});
+    await listDelete({id});
   }
 
   async function handleChangeColorTodo(id: string, color: string) {
-    await updateColorList({id, color})
+    await listUpdateColor({id, color})
   }
 
   return (
     <div className={styles.tabConfig}>
-      <a onClick={() => handleDeleteTodo(idList)}>
+      <a onClick={() => handleDeleteTodo(listID)}>
         <CgTrash size={24} className={styles.iconMenu} />
         Delete list
       </a>
@@ -42,32 +42,32 @@ export function MenuConfig({idList}: IMenuTypes) {
             <button
               type="button"
               style={{background: colors.colorBlue}}
-              onClick={() => handleChangeColorTodo(idList, colors.colorBlue)}
+              onClick={() => handleChangeColorTodo(listID, colors.colorBlue)}
             />
             <button
               type="button"
               style={{background: colors.colorRed}}
-              onClick={() => handleChangeColorTodo(idList, colors.colorRed)}
+              onClick={() => handleChangeColorTodo(listID, colors.colorRed)}
             />
             <button
               type="button"
               style={{background: colors.colorOrange}}
-              onClick={() => handleChangeColorTodo(idList, colors.colorOrange)}
+              onClick={() => handleChangeColorTodo(listID, colors.colorOrange)}
             />
             <button
               type="button"
               style={{background: colors.colorGreen}}
-              onClick={() => handleChangeColorTodo(idList, colors.colorGreen)}
+              onClick={() => handleChangeColorTodo(listID, colors.colorGreen)}
             />
             <button
               type="button"
               style={{background: colors.colorBlack}}
-              onClick={() => handleChangeColorTodo(idList, colors.colorBlack)}
+              onClick={() => handleChangeColorTodo(listID, colors.colorBlack)}
             />
             <button
               type="button"
               style={{background: colors.colorDefault}}
-              onClick={() => handleChangeColorTodo(idList, colors.colorDefault)}
+              onClick={() => handleChangeColorTodo(listID, colors.colorDefault)}
             />
           </div>
         </div>

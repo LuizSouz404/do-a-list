@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { ITodoCategory, useTodos } from '../../hooks/useToDo';
+import { IListTodo, useTodo } from '../../context/todo';
 import { TodoList } from '../TodoList';
 import { isEqual } from 'date-fns'
 
 import styles from './styles.module.scss';
 
 export function TodosTable() {
-  const {todos} = useTodos();
-  const [dayTodo, setDayTodo] = useState<ITodoCategory[]>([]);
+  const {todos} = useTodo();
+  const [dayTodo, setDayTodo] = useState<IListTodo[]>([]);
 
   useEffect(() => {
     const newArray = todos;

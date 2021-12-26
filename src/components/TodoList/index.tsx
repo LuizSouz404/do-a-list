@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { ITodoCategory } from '../../hooks/useToDo';
 import { DetailsTodo } from '../DetailsTodo';
 import { MenuConfig } from '../MenuConfig';
+import { IListTodo } from '../../context/todo';
 
 import {CgMoreAlt, CgArrowsExpandRight} from 'react-icons/cg';
 import styles from './styles.module.scss';
 
-export function TodoList({title, todos, color, id, createdAt}: ITodoCategory) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [isDetailsTodoOpen, setIsDetailsTodoOpen] = useState(false);
+export function TodoList({title, todos, color, id, createdAt}: IListTodo) {
+const [modalOpen, setModalOpen] = useState(false);
+const [isDetailsTodoOpen, setIsDetailsTodoOpen] = useState(false);
 
   const completed = todos.reduce((acc, todo) => {
     todo.check ? acc++ : acc;
@@ -38,7 +38,7 @@ export function TodoList({title, todos, color, id, createdAt}: ITodoCategory) {
           </div>
           <div className={styles.btnDetails} >
             <CgMoreAlt className={styles.btnDetails} size={30} style={color === '#fefeff' ? {color: "#000"} : {color: "#fff"}} onClick={() => setModalOpen(!modalOpen)}/>
-            {modalOpen && (<MenuConfig idList={id} />)}
+            {modalOpen && (<MenuConfig listID={id} />)}
           </div>
         </header>
 
