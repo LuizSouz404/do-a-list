@@ -2,7 +2,6 @@ import Head from 'next/head'
 import type { AppProps } from 'next/app';
 import '../styles/global.scss';
 import Modal from 'react-modal';
-import { TodosProvider } from '../hooks/useToDo';
 import AppProvider from '../context';
 
 Modal.setAppElement("#__next");
