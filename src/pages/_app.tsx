@@ -1,20 +1,21 @@
 import Head from 'next/head'
 import type { AppProps } from 'next/app';
-import { TodosProvider } from '../hooks/useToDo';
 import '../styles/global.scss';
 import Modal from 'react-modal';
+import { TodosProvider } from '../hooks/useToDo';
+import AppProvider from '../context';
 
 Modal.setAppElement("#__next");
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head>      
+      <Head>
         <title>Do a List | Your todo web app</title>
       </Head>
-      <TodosProvider>
+      <AppProvider>
         <Component {...pageProps} />
-      </TodosProvider>
+      </AppProvider>
     </>
   )
 }
