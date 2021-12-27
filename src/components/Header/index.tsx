@@ -18,7 +18,7 @@ export function Header() {
         {modalOpen && <MenuHeader modalIsOpen={setModalOpen}/>}
       </div>
       <div className={styles.logo}>
-        <Image layout='fill' src="/logo.png" alt="Logo" />
+        <Image priority={true} layout='fill' src="/imglog.png" alt="Logo" />
       </div>
     </header>
   )

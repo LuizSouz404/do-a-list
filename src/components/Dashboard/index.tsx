@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast';
 import { CgMathPlus } from 'react-icons/cg';
 import { useAuth } from '../../context/auth';
 import { Summary } from '../Summary';
@@ -10,7 +11,8 @@ interface IDashboardProps {
 }
 
 export function Dashboard({ onOpenNewTodoModal }: IDashboardProps) {
-  const {user} = useAuth();
+  const user = 'luiz'
+  //const {user} = useAuth();
   return (
     <main className={styles.container}
       style={!user?
@@ -25,6 +27,10 @@ export function Dashboard({ onOpenNewTodoModal }: IDashboardProps) {
       <button className={styles.btn} onClick={onOpenNewTodoModal}>
         <CgMathPlus size={24}/>
       </button>
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+      />
     </main>
   )
 }

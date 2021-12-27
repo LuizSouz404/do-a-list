@@ -12,7 +12,6 @@ type IUser = {
 
 type AuthState = {
   token: string;
-  user: IUser;
 }
 
 type SignInCredentials = {
@@ -27,7 +26,8 @@ type SignUpCredentials = {
 }
 
 type AuthContextData = {
-  user: IUser,
+  user:IUser | undefined;
+  setSession: (user: IUser) => void;
   signUp: (credentials: SignUpCredentials) => Promise<void>,
   signIn: (credentials: SignInCredentials) => Promise<void>,
   signOut: () => void,
@@ -40,18 +40,22 @@ type AuthProviderProps = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export function AuthProvider({children}: AuthProviderProps) {
+  const [user, setUser] = useState<IUser>();
   const [data, setData] = useState<AuthState>(() => {
     const {['DoAList.token']: token } = parseCookies();
-    const {['DoAList.user']: user } = parseCookies();
 
-    if (token && user) {
+    if (token) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      return { token, user: JSON.parse(user) };
+      return { token };
     }
 
     return {} as AuthState;
   });
+
+  function setSession({id,name,email,createdAt,updatedAt}: IUser) {
+    setUser({id,name,email,createdAt,updatedAt})
+  }
 
   const signUp = useCallback(async({ name ,email,password }) => {
       await api.post('signup', {
@@ -65,29 +69,25 @@ export function AuthProvider({children}: AuthProviderProps) {
       password
     });
 
-    const { token, user } = response.data;
+    const { token } = response.data;
 
     setCookie(undefined, 'DoAList.token', token, {
       maxAge: 60 * 60 * 24 //24Hour
     });
 
-    setCookie(undefined, 'DoAList.user', JSON.stringify(user), {
-      maxAge: 60 * 60 * 24 //24Hour
-    });
-
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    setData({ token, user });
+    setData({ token });
   }, []);
 
   const signOut = useCallback(() => {
     destroyCookie(undefined, 'DoAList.token');
-    destroyCookie(undefined, 'DoAList.user');
 
     setData({} as AuthState);
+    setUser(undefined);
   }, []);
 
   return (
-    <AuthContext.Provider value={{signUp, signIn, signOut, user: data.user}}>
+    <AuthContext.Provider value={{ setSession, user, signUp, signIn, signOut}}>
       {children}
     </AuthContext.Provider>
   )

@@ -95,7 +95,7 @@ export function SignInPage() {
       <Toaster position="bottom-center" reverseOrder={false} key='main'/>
 
       <div className={styles.imageLogo}>
-        <Image width={558} height={120} src="/logo.png" alt="Do a List" />
+        <Image priority={true} width={279} height={60} src="/imglog.png" alt="Do a List" />
       </div>
 
       <div className={styles.content}>

@@ -61,6 +61,7 @@ type ITodoPriority = {
 type TodoContextData = {
   todos: IListTodo[];
   priority: ITodoPriority[];
+  setData: (data: IListTodo[]) => void;
 
   listCreate: ({title, color}: IListCreate) => Promise<void>;
   listDelete: ({id}: IListDelete) => Promise<void>;
@@ -81,12 +82,10 @@ export function TodoProvider({children}: TodoProviderProps) {
   const [todos, setTodos] = useState<IListTodo[]>([]);
   const [priority, setPriority] = useState<ITodoPriority[]>([]);
 
-  useEffect(() => {
-    api.get('/profile/me').then(response => {
-      console.log(response.data)
-      setTodos(response.data.lists);
-    })
-  },[]);
+  function setData(data: IListTodo[]) {
+    console.log(data);
+    setTodos(data)
+  }
 
   useEffect(() => {
     const newTodo = todos;
@@ -121,18 +120,19 @@ export function TodoProvider({children}: TodoProviderProps) {
     if(title === "") {
       return;
     }
+    console.log(todos);
 
-    const {data} = await api.post('list/create', {
+    api.post('list/create', {
       title,
       color
-    });
+    }).then(response => {
+      const newArrayList = todos;
 
-    setTodos([...todos, data]);
+      setTodos([...newArrayList, response.data]);
+    })
+  }, [todos]);
 
-    return data;
-  }, []);
-
-  const listDelete = useCallback(async({id}: IListDelete) => {
+  async function listDelete({id}: IListDelete) {
     const newListArray = todos;
 
     const indexDelete = newListArray.findIndex(list => list.id === id);
@@ -144,9 +144,9 @@ export function TodoProvider({children}: TodoProviderProps) {
 
       await api.delete(`list/delete/${id}`);
     }
-  }, []);
+  }
 
-  const listUpdateColor = useCallback(async({id, color}: IListUpdateColor) => {
+  async function listUpdateColor({id, color}: IListUpdateColor) {
     const newListArray = todos;
 
     const indexUpdatedList = newListArray.findIndex(list => list.id === id);
@@ -160,9 +160,9 @@ export function TodoProvider({children}: TodoProviderProps) {
 
       setTodos([...newListArray]);
 
-      await api.post(`list/edit/${id}`, {color});
+      await api.put(`list/edit/${id}`, {color});
     }
-  }, []);
+  }
 
   const todoCreate = useCallback(async({id, title, deadline}: ITodoCreate) => {
     if(title === "") {
@@ -185,7 +185,7 @@ export function TodoProvider({children}: TodoProviderProps) {
     }
   }, []);
 
-  const todoUpdateCheck = useCallback(async({listID, todoID}: ITodoUpdateCheck)=> {
+ async function todoUpdateCheck({listID, todoID}: ITodoUpdateCheck) {
     const newListArray = todos;
 
     const indexList = newListArray.findIndex(list => list.id === listID);
@@ -198,12 +198,12 @@ export function TodoProvider({children}: TodoProviderProps) {
 
         setTodos([...newListArray]);
 
-        await api.post(`todo/check/${todoID}`);
+        await api.patch(`todo/check/${todoID}`);
       }
     }
-  }, []);
+ }
 
-  const todoDelete = useCallback(async({listID, todoID}: ITodoDelete) => {
+  async function todoDelete({listID, todoID}: ITodoDelete) {
     const newListArray = todos;
 
     const indexList = newListArray.findIndex(list => list.id === listID);
@@ -219,13 +219,14 @@ export function TodoProvider({children}: TodoProviderProps) {
         await api.delete(`todo/delete/${todoID}`);
       }
     }
-  }, []);
+  }
 
   return (
     <TodoContext.Provider
       value={{
         todos,
         priority,
+        setData,
 
         listCreate,
         listDelete,

@@ -11,7 +11,7 @@ export default function SignIn() {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const {['DoAList.token']: token } = parseCookies(ctx);
 
-  if(!!token) {
+  if(token) {
     return {
       redirect: {
         destination: '/',
